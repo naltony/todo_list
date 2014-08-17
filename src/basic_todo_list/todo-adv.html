@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="todo.css"/>
+
+    <script type='text/javascript' src="../../bower_components/angular/angular.min.js"></script>
+    <script type='text/javascript' src="todo-adv-service.js"></script>
+    <script type='text/javascript' src="todo-adv-crl.js"></script>
+</head>
+
+<body ng-app="advTodoApp">
+
+<div class="container" ng-controller="AdvTodoController as crl">
+
+    <div class="page-header">
+        <h1>Need To Do!</h1>
+
+        <p>simple introduction level angular project</p>
+    </div>
+
+    <form class="form-inline">
+
+        <div class="form-group">
+            <label for="taskTitle">Task Title</label>
+            <input type="text" class="form-control" id="taskTitle" placeholder="title..." ng-model="crl.taskTitle">
+        </div>
+
+        <div class="form-group">
+            <label for="taskDesc">Description</label>
+            <input class="form-control" id="taskDesc" placeholder="description.." ng-model="crl.taskDesc">
+        </div>
+
+        <div class="form-group">
+            <button class="form-control btn btn-primary" ng-click="crl.addTask()">Add</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Done</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="task in crl.todolist">
+            <td><input class="input" type="checkbox" ng-checked="task.data.done" ng-click="crl.toggleDone($index, task)"/></td>
+            <td><input class="input" type="text" ng-model="task.data.title" ng-class="{'doneTask':task.data.done}"/></td>
+            <td><input class="input" type="text" ng-model="task.data.description" ng-class="{'doneTask':task.data.done}"/></td>
+            <td>
+                <button ng-click="crl.removeTask($index)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                <button ng-click="crl.updateTask($index, task)" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>
