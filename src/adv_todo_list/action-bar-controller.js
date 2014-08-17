@@ -1,15 +1,15 @@
 (function() {
 
-    function ActionBarController($rootScope, $scope) {
+    function ActionBarController($scope) {
 
         this.clearLog = function () {
-            $rootScope.$emit('emitClearLogEvent');
+            $scope.$emit('emitClearLogEvent');
         };
 
         this.showHideClicked = function() {
-            $rootScope.showDoneTasks = !$rootScope.showDoneTasks;
+            $scope.$emit('showHideClickedEvent');
         }
     }
 
-    angular.module('taskMngApp').controller('ActionBarController', ['$rootScope', '$scope', ActionBarController])
+    angular.module('taskMngApp').controller('ActionBarController', ['$scope', ActionBarController])
 }());

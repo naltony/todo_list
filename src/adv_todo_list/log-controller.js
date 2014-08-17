@@ -1,6 +1,6 @@
 ( function() {
 
-    function LogActionController($rootScope, $scope) {
+    function LogActionController($scope) {
 
         var addLeadingZero = function(num){
             if(num<10){
@@ -46,11 +46,11 @@
             logAction(' - task done');
         });
 
-        $rootScope.$on('broadcastClearLogEvent', function() {
+        $scope.$on('broadcastClearLogEvent', function() {
             $scope.logsList = [];
         });
     }
 
-    angular.module('taskMngApp').controller('LogActionController', ['$rootScope', '$scope', LogActionController])
+    angular.module('taskMngApp').controller('LogActionController', ['$scope', LogActionController])
 
 })();

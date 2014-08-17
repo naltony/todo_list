@@ -1,8 +1,8 @@
 (function() {
 
-    function TaskBaseController(TaskManageService, $rootScope, $scope) {
+    function TaskBaseController(TaskManageService, $scope) {
 
-        $rootScope.showDoneTasks = true;
+        $scope.showDoneTasks = true;
 
         $scope.tasksList = TaskManageService.getTasksList();
 
@@ -34,10 +34,14 @@
             $scope.$broadcast('logDoneTaskEvent', task);
         });
 
-        $rootScope.$on('emitClearLogEvent', function() {
-            $rootScope.$broadcast('broadcastClearLogEvent');
+        $scope.$on('emitClearLogEvent', function() {
+            $scope.$broadcast('broadcastClearLogEvent');
+        });
+
+        $scope.$on('showHideClickedEvent', function() {
+            $scope.showDoneTasks = !$scope.showDoneTasks;
         });
     }
 
-    angular.module('taskMngApp').controller('TaskBaseController', ['TaskManageService', '$rootScope', '$scope', TaskBaseController])
+    angular.module('taskMngApp').controller('TaskBaseController', ['TaskManageService', '$scope', TaskBaseController])
 }());
