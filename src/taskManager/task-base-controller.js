@@ -2,16 +2,37 @@
 
     function TaskBaseController(TaskManageService, $scope) {
 
-        $scope.showDoneTasks = true;
+        var TaskPrototype = {
+            done : false,
+            title : "",
+            description : ""
+        }
 
-        $scope.tasksList = TaskManageService.getTasksList();
+        this.showDoneTasks = true;
+        this.tasksList = TaskManageService.getTasksList();
 
-        var updateTasksList = function() {
-            $scope.tasksList = TaskManageService.getTasksList();
+        this.getNewTask = function() {
+            var task = {};
+            task.done = TaskPrototype.done;
+            task.title = TaskPrototype.title;
+            task.description = TaskPrototype.description;
+            return task;
+        }
+
+        this.convertTask = function (task){
+            var newTask = this.getNewTask();
+            newTask.done = task.done;
+            newTask.title = task.title;
+            newTask.description = task.description;
+            return newTask;
+        }
+
+        this.updateTasksList = function() {
+            this.tasksList = TaskManageService.getTasksList();
         };
 
         $scope.$on('addTaskEvent', function(ev, task) {
-            updateTasksList();
+            $scope.baseController.updateTasksList();
             $scope.$broadcast('logAddTaskEvent', task);
         });
 
@@ -20,17 +41,17 @@
         });
 
         $scope.$on('updateTaskEvent', function(ev, task) {
-            updateTasksList();
+            $scope.baseController.updateTasksList();
             $scope.$broadcast('logUpdateTaskEvent', task);
         });
 
         $scope.$on('removeTaskEvent', function(ev, task) {
-            updateTasksList();
+            $scope.baseController.updateTasksList();
             $scope.$broadcast('logRemoveTaskEvent', task);
         });
 
         $scope.$on('doneTaskEvent', function(ev, task) {
-            updateTasksList();
+            $scope.baseController.updateTasksList();
             $scope.$broadcast('logDoneTaskEvent', task);
         });
 
@@ -39,7 +60,7 @@
         });
 
         $scope.$on('showHideClickedEvent', function() {
-            $scope.showDoneTasks = !$scope.showDoneTasks;
+            $scope.baseController.showDoneTasks = !$scope.baseController.showDoneTasks;
         });
     }
 

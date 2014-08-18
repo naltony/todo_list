@@ -2,24 +2,24 @@
 
     function TaskFormController(TaskManageService, $scope) {
 
-        $scope.taskIndex = undefined;
-        $scope.formTask = TaskManageService.getNewTask();
+        this.taskIndex = undefined;
+        this.formTask = $scope.baseController.getNewTask();
 
         this.addTask = function () {
-            TaskManageService.addTask($scope.formTask);
-            $scope.formTask = TaskManageService.getNewTask(); // Clear the form task
+            TaskManageService.addTask($scope.baseController.convertTask(this.formTask));
+            this.formTask = $scope.baseController.getNewTask(); // Clear the form task
             $scope.$emit('addTaskEvent');
         }
 
         this.updateTask = function() {
-            TaskManageService.updateTask($scope.taskIndex, $scope.formTask);
+            TaskManageService.updateTask(this.taskIndex, this.formTask);
             $scope.$emit('updateTaskEvent');
-            $scope.formTask = TaskManageService.getNewTask(); // Clear the form task
-            $scope.taskIndex = undefined;
+            this.formTask = $scope.baseController.getNewTask(); // Clear the form task
+            this.taskIndex = undefined;
         }
 
         this.toggelBtn = function() {
-            if ($scope.taskIndex==undefined) {
+            if (this.taskIndex==undefined) {
                 this.addTask();
             } else {
                 this.updateTask();
@@ -27,19 +27,19 @@
         }
 
         this.getBtnName = function() {
-            if ($scope.taskIndex==undefined) {
+            if (this.taskIndex==undefined) {
                 return 'Add';
             } else {
                 return 'Save';
             }
         }
 
-        $scope.$on('broadcastSetTaskForEditEvent', function(ev,index, task) {
-            $scope.taskIndex = index;
-            $scope.formTask = TaskManageService.getNewTask();
-            $scope.formTask.done = task.done;
-            $scope.formTask.title = task.title;
-            $scope.formTask.description = task.description;
+        $scope.$on('broadcastSetTaskForEditEvent', function(ev, index, task) {
+            $scope.formController.taskIndex = index;
+            $scope.formController.formTask = $scope.baseController.getNewTask();
+            $scope.formController.formTask.done = task.done;
+            $scope.formController.formTask.title = task.title;
+            $scope.formController.formTask.description = task.description;
         });
     }
 

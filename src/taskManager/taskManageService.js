@@ -4,31 +4,11 @@
 
         var todoListNameInStorage = 'todoList';
 
-        function TaskProto() {
-            this.done = false;
-            this.title = "";
-            this.description = "";
-        }
-
-        var convertTask = function (task){
-            var newTask = new TaskProto();
-            newTask.done = task.done;
-            newTask.title = task.title;
-            newTask.description = task.description;
-            return newTask;
-        }
-
-        this.getNewTask = function() {
-            return new TaskProto();
-        }
-
         this.getTasksList = function() {
-            var todoList = localStorageService.get(todoListNameInStorage);
-            return todoList;
+            return localStorageService.get(todoListNameInStorage);
         }
 
-        this.addTask = function(taskFromUI) {
-            var task = convertTask(taskFromUI);
+        this.addTask = function(task) {
             var todoList = localStorageService.get(todoListNameInStorage);
             if(todoList==null || todoList==undefined) {
                 todoList=[];

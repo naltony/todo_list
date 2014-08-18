@@ -62,7 +62,7 @@
                 </thead>
                 <tbody>
 
-                    <tr ng-repeat="task in tasksList track by $index" ng-show="showDoneTasks || !task.done">
+                    <tr ng-repeat="task in baseController.tasksList track by $index" ng-show="baseController.showDoneTasks || !task.done">
                         <td class="text-center"><input ng-checked="task.done" ng-click="listController.toggleDone($index, task)" class="input" type="checkbox"/></td>
                         <td><label ng-bind="task.title" ng-class="{'doneTask':task.done}"/></td>
                         <td><lable ng-bind="task.description" ng-class="{'doneTask':task.done}"/></td>
@@ -87,11 +87,11 @@
             <form class="form-horizontal" ng-controller="TaskFormController as formController">
 
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Title" ng-model="formTask.title">
+                    <input type="text" class="form-control" placeholder="Title" ng-model="formController.formTask.title">
                 </div>
 
                 <div class="form-group">
-                    <textarea rows="6" class="form-control" placeholder="Description" ng-model="formTask.description"></textarea>
+                    <textarea rows="6" class="form-control" placeholder="Description" ng-model="formController.formTask.description"></textarea>
                 </div>
 
                 <div class="form-group">
