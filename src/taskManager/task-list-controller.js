@@ -14,7 +14,7 @@
         this.toggleDone = function($index, task) {
             task.done = !task.done;
             TaskManageService.updateTask($index, task);
-            $scope.$emit('doneTaskEvent');
+            $scope.$emit('doneTaskEvent', task.done);
         }
     }
 

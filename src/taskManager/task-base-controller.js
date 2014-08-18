@@ -50,9 +50,9 @@
             $scope.$broadcast('logRemoveTaskEvent', task);
         });
 
-        $scope.$on('doneTaskEvent', function(ev, task) {
+        $scope.$on('doneTaskEvent', function(ev, done) {
             $scope.baseController.updateTasksList();
-            $scope.$broadcast('logDoneTaskEvent', task);
+            $scope.$broadcast('logDoneTaskEvent', done);
         });
 
         $scope.$on('emitClearLogEvent', function() {

@@ -42,8 +42,12 @@
             logAction(' - task removed');
         });
 
-        $scope.$on('logDoneTaskEvent', function(ev, task){
-            logAction(' - task done');
+        $scope.$on('logDoneTaskEvent', function(ev, done){
+            if (done) {
+                logAction(' - task done');
+            } else {
+                logAction(' - task un-done');
+            }
         });
 
         $scope.$on('broadcastClearLogEvent', function() {
