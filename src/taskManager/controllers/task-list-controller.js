@@ -4,7 +4,7 @@
 
         this.removeTask = function($index) {
             TaskManageService.removeTask($index);
-            $scope.$emit('removeTaskEvent');
+            $scope.$emit('taskAppEvent', 'logEvent', 'Task removed.');
         }
 
         this.editTask = function($index, task) {
@@ -14,7 +14,13 @@
         this.toggleDone = function($index, task) {
             task.done = !task.done;
             TaskManageService.updateTask($index, task);
-            $scope.$emit('doneTaskEvent', task.done);
+            this.logAction = '';
+            if (task.done) {
+                this.logAction =' Task done';
+            } else {
+                this.logAction = ' Task un-done';
+            }
+            $scope.$emit('taskAppEvent', 'logEvent', this.logAction);
         }
     }
 

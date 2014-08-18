@@ -3,11 +3,11 @@
     function ActionBarController($scope) {
 
         this.clearLog = function () {
-            $scope.$emit('emitClearLogEvent');
+            $scope.$emit('taskAppEvent', 'clearLogEvent');
         };
 
         this.showHideClicked = function() {
-            $scope.$emit('showHideClickedEvent');
+            $scope.baseController.showDoneTasks = !$scope.baseController.showDoneTasks;
         }
     }
 

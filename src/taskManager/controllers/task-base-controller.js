@@ -31,36 +31,13 @@
             this.tasksList = TaskManageService.getTasksList();
         };
 
-        $scope.$on('addTaskEvent', function(ev, task) {
-            $scope.baseController.updateTasksList();
-            $scope.$broadcast('logAddTaskEvent', task);
-        });
+        $scope.$on('taskAppEvent', function(ev, evType, data) {
+            this.updateTasksList();
+            $scope.$broadcast(evType, data);
+        }.bind(this));
 
         $scope.$on('emitSetTaskForEditEvent', function(ev, index, task) {
             $scope.$broadcast('broadcastSetTaskForEditEvent', index, task);
-        });
-
-        $scope.$on('updateTaskEvent', function(ev, task) {
-            $scope.baseController.updateTasksList();
-            $scope.$broadcast('logUpdateTaskEvent', task);
-        });
-
-        $scope.$on('removeTaskEvent', function(ev, task) {
-            $scope.baseController.updateTasksList();
-            $scope.$broadcast('logRemoveTaskEvent', task);
-        });
-
-        $scope.$on('doneTaskEvent', function(ev, done) {
-            $scope.baseController.updateTasksList();
-            $scope.$broadcast('logDoneTaskEvent', done);
-        });
-
-        $scope.$on('emitClearLogEvent', function() {
-            $scope.$broadcast('broadcastClearLogEvent');
-        });
-
-        $scope.$on('showHideClickedEvent', function() {
-            $scope.baseController.showDoneTasks = !$scope.baseController.showDoneTasks;
         });
     }
 

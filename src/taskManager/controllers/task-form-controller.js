@@ -8,12 +8,12 @@
         this.addTask = function () {
             TaskManageService.addTask($scope.baseController.convertTask(this.formTask));
             this.formTask = $scope.baseController.getNewTask(); // Clear the form task
-            $scope.$emit('addTaskEvent');
+            $scope.$emit('taskAppEvent', 'logEvent', 'Task was added.');
         }
 
         this.updateTask = function() {
             TaskManageService.updateTask(this.taskIndex, this.formTask);
-            $scope.$emit('updateTaskEvent');
+            $scope.$emit('taskAppEvent', 'logEvent', 'Task was updated.');
             this.formTask = $scope.baseController.getNewTask(); // Clear the form task
             this.taskIndex = undefined;
         }
