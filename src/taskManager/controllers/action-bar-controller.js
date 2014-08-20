@@ -7,7 +7,7 @@
         };
 
         this.showHideClicked = function() {
-            $scope.baseController.showDoneTasks = !$scope.baseController.showDoneTasks;
+            $scope.baseController.sharedData.showDoneTasks = !$scope.baseController.sharedData.showDoneTasks;
         }
     }
 

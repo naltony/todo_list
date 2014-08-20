@@ -8,9 +8,6 @@
             description : ""
         }
 
-        this.showDoneTasks = true;
-        this.tasksList = TaskManageService.getTasksList();
-
         this.getNewTask = function() {
             var task = {};
             task.done = TaskPrototype.done;
@@ -18,6 +15,14 @@
             task.description = TaskPrototype.description;
             return task;
         }
+
+        this.sharedData = {
+            showActionBar : true,
+            showDoneTasks : true,
+            tasksList : TaskManageService.getTasksList(),
+            activeTask : this.getNewTask(),
+            activeTaskIndex : undefined
+        };
 
         this.convertTask = function (task){
             var newTask = this.getNewTask();
@@ -28,17 +33,17 @@
         }
 
         this.updateTasksList = function() {
-            this.tasksList = TaskManageService.getTasksList();
+            this.sharedData.tasksList = TaskManageService.getTasksList();
         };
+
+        this.toggleShowHideActions = function() {
+            this.sharedData.showActionBar = !this.sharedData.showActionBar;
+        }
 
         $scope.$on('taskAppEvent', function(ev, evType, data) {
             this.updateTasksList();
             $scope.$broadcast(evType, data);
         }.bind(this));
-
-        $scope.$on('emitSetTaskForEditEvent', function(ev, index, task) {
-            $scope.$broadcast('broadcastSetTaskForEditEvent', index, task);
-        });
     }
 
     angular.module('taskMngApp').controller('TaskBaseController', ['TaskManageService', '$scope', TaskBaseController])
