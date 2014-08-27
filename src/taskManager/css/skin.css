@@ -6,3 +6,7 @@
 .doneTask{
     text-decoration: line-through;
 }
+
+.ng-invalid-required{
+    border-color: red;
+}

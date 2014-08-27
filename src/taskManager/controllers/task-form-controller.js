@@ -30,8 +30,10 @@
                 return 'Save';
             }
         }
+
+        // For UI use
+        this.taskPriorities = ['High', 'Medium', 'Low'];
     }
 
     angular.module('taskMngApp').controller('TaskFormController', ['TaskManageService', '$scope', TaskFormController])
-
 }());

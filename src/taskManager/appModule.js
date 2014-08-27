@@ -1,0 +1,1 @@
+angular.module('taskMngApp', ['LocalStorageModule', 'ngRoute']);

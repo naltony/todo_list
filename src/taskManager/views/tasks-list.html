@@ -1,0 +1,59 @@
+<header class="row">
+    <div class="page-header">
+        <h1>Task Manager
+            <span class="glyphicon glyphicon-th pull-right" ng-click="baseController.toggleShowHideActions()"></span>
+        </h1>
+    </div>
+</header>
+
+<!-- action bar -->
+<section class="row" ng-show="baseController.sharedData.showActionBar">
+    <div class="panel panel-default" ng-controller="ActionBarController as actionBarController">
+        <div class="panel-body">
+            <button class="btn btn-default" ng-click="actionBarController.showHideClicked()">show/hide completed</button>
+            <button class="btn btn-default" ng-click="actionBarController.clearLog()">Clear Log</button>
+
+        </div>
+    </div>
+</section><!-- /action bar -->
+
+
+<!-- task table -->
+<div class="col-lg-7" ng-controller="TaskListController as listController">
+
+    <form class="form-group form-inline pull-right">
+        <div class="input-group">
+            <input type="search" ng-model="listController.search" placeholder="Search..." class="form-control"/>
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+        </div>
+    </form>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Done</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="task in baseController.sharedData.tasksList | filter:listController.search" ng-show="baseController.sharedData.showDoneTasks || !task.done">
+            <td class="text-center"><input ng-checked="task.done" ng-click="listController.toggleDone($index, task)" class="input" type="checkbox"/></td>
+            <td><label ng-bind="task.title" ng-class="{'doneTask':task.done}"/></td>
+            <td><lable ng-bind="task.description" ng-class="{'doneTask':task.done}"/></td>
+            <td>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-danger" ng-click="listController.removeTask($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button class="btn btn-primary" ng-click="listController.editTask($index, task)" ng-disabled="task.done">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div><!-- /task table -->

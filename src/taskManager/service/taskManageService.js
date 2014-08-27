@@ -19,6 +19,7 @@
 
         this.updateTask = function(index, task) {
             var todoList = localStorageService.get(todoListNameInStorage);
+            todoList[index].priority = task.priority;
             todoList[index].done = task.done;
             todoList[index].title = task.title;
             todoList[index].description = task.description;
@@ -30,12 +31,7 @@
             todoList.splice($index,1);
             localStorageService.set(todoListNameInStorage, todoList);
         }
-
-
-        /*this.clearAllTasks = function(taskToRemove) {
-            localStorageService.remove(todoListNameInStorage);
-        }*/
     }
 
-    angular.module('taskMngApp',['LocalStorageModule']).service('TaskManageService', ['localStorageService', TaskManageService])
+    angular.module('taskMngApp').service('TaskManageService', ['localStorageService', TaskManageService])
 })();

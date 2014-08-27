@@ -1,13 +1,13 @@
 ( function() {
 
-    function LogActionController($scope, DataFormatService) {
+    function LogActionController($scope, LogManagerService) {
 
-        $scope.logsList = [];
+        this.logList = function(){
+            return  LogManagerService.getLogList();
+        }
 
         var logAction = function(evDesc) {
-            var date = DataFormatService.getCurrentDate();
-            var log = date + evDesc;
-            $scope.logsList.push(log);
+            LogManagerService.addLog(evDesc);
         }
 
         $scope.$on('logEvent', function(ev, evDesc){
@@ -15,9 +15,9 @@
         });
 
         $scope.$on('clearLogEvent', function() {
-            $scope.logsList = [];
+            LogManagerService.clearLog();
         });
     }
 
-    angular.module('taskMngApp').controller('LogActionController', ['$scope', 'DataFormatService', LogActionController])
+    angular.module('taskMngApp').controller('LogActionController', ['$scope', 'LogManagerService', LogActionController])
 })();

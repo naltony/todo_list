@@ -1,0 +1,32 @@
+<!-- task form -->
+<div class="col-lg-2">
+
+    <form name="taskForm" class="form-horizontal" ng-controller="TaskFormController as formController" novalidate>
+
+        <div class="form-group">
+            <select class="form-control"
+                    name="taskPriority"
+                    ng-model="baseController.sharedData.activeTask.priority"
+                    ng-options="value for value in formController.taskPriorities"
+                    required>
+                <option value="" class="text-muted">Priority</option>
+            </select>
+
+            <div ng-if="taskForm.taskPriority.$error.required">
+                <span class="text-danger">Priority is required.</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Title" ng-model="baseController.sharedData.activeTask.title" required>
+        </div>
+
+        <div class="form-group">
+            <textarea rows="6" class="form-control" placeholder="Description" ng-model="baseController.sharedData.activeTask.description" required=""></textarea>
+        </div>
+
+        <div class="form-group">
+            <button class="form-control btn btn-primary" ng-disabled="taskForm.$invalid" ng-click="formController.toggelBtn()">{{formController.getBtnName()}}</button>
+        </div>
+    </form>
+</div><!-- /task form -->

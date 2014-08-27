@@ -12,5 +12,11 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "gulp": "~3.8.7"
+  },
+  "devDependencies": {
+    "angular-route": "~1.2.23"
+  }
 }

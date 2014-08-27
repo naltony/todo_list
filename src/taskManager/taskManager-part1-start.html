@@ -5,8 +5,12 @@
     <title></title>
 
     <script type='text/javascript' src="../../bower_components/angular/angular.min.js"></script>
-    <script type="application/javascript" src="controllers/angular-local-storage.js"></script>
+    <script type='text/javascript' src="../../bower_components/angular-route/angular-route.min.js"></script>
+    <script type="application/javascript" src="service/angular-local-storage.js"></script>
+    <script type="application/javascript" src="appModule.js"></script>
+    <script type="application/javascript" src="route/route.js"></script>
     <script type="application/javascript" src="service/taskManageService.js"></script>
+    <script type="application/javascript" src="service/LogManagerService.js"></script>
     <script type="application/javascript" src="controllers/task-base-controller.js"></script>
     <script type="application/javascript" src="controllers/task-form-controller.js"></script>
     <script type="application/javascript" src="controllers/task-list-controller.js"></script>
@@ -29,7 +33,9 @@
         </div>
 
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Tasks</a></li>
+            <li class="active"><a href="#tasks-list">Tasks</a></li>
+            <li class="active"><a href="#log">Log</a></li>
+            <li class="active"><a href="#new-task">Add Task</a></li>
         </ul>
 
     </div>
@@ -37,92 +43,108 @@
 
 <div class="container" ng-controller="TaskBaseController as baseController">
 
-    <header class="row">
-        <div class="page-header">
-            <h1>Task Manager
-                <span class="glyphicon glyphicon-th pull-right" ng-click="baseController.toggleShowHideActions()"></span>
-            </h1>
-        </div>
-    </header>
+    <!--<header class="row">-->
+        <!--<div class="page-header">-->
+            <!--<h1>Task Manager-->
+                <!--<span class="glyphicon glyphicon-th pull-right" ng-click="baseController.toggleShowHideActions()"></span>-->
+            <!--</h1>-->
+        <!--</div>-->
+    <!--</header>-->
 
-    <!-- action bar -->
-    <section class="row" ng-show="baseController.sharedData.showActionBar">
-        <div class="panel panel-default" ng-controller="ActionBarController as actionBarController">
-            <div class="panel-body">
-                <button class="btn btn-default" ng-click="actionBarController.showHideClicked()">show/hide completed</button>
-                <button class="btn btn-default" ng-click="actionBarController.clearLog()">Clear Log</button>
+    <!--&lt;!&ndash; action bar &ndash;&gt;-->
+    <!--<section class="row" ng-show="baseController.sharedData.showActionBar">-->
+        <!--<div class="panel panel-default" ng-controller="ActionBarController as actionBarController">-->
+            <!--<div class="panel-body">-->
+                <!--<button class="btn btn-default" ng-click="actionBarController.showHideClicked()">show/hide completed</button>-->
+                <!--<button class="btn btn-default" ng-click="actionBarController.clearLog()">Clear Log</button>-->
 
-            </div>
-        </div>
-    </section><!-- /action bar -->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>&lt;!&ndash; /action bar &ndash;&gt;-->
 
     <div class="row">
 
-        <!-- task log -->
-        <div class="col-lg-3">
-            <ul class="list-unstyled" ng-controller="LogActionController as logController">
-                <li ng-repeat="log in logsList"><label ng-bind="log"></label></li>
-            </ul>
-        </div> <!-- /task log -->
+        <!--&lt;!&ndash; task log &ndash;&gt;-->
+        <!--<div class="col-lg-3">-->
+            <!--<ul class="list-unstyled" ng-controller="LogActionController as logController">-->
+                <!--<li ng-repeat="log in logController.logList()"><label ng-bind="log"></label></li>-->
+            <!--</ul>-->
+        <!--</div> &lt;!&ndash; /task log &ndash;&gt;-->
 
-        <!-- task table -->
-        <div class="col-lg-7" ng-controller="TaskListController as listController">
+        <ng-view></ng-view>
 
-            <form class="form-group form-inline pull-right">
-                <div class="input-group">
-                    <input type="search" ng-model="listController.search" placeholder="Search..." class="form-control"/>
-                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-                </div>
-            </form>
+        <!--&lt;!&ndash; task table &ndash;&gt;-->
+        <!--<div class="col-lg-7" ng-controller="TaskListController as listController">-->
 
-            <table class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>Done</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
+            <!--<form class="form-group form-inline pull-right">-->
+                <!--<div class="input-group">-->
+                    <!--<input type="search" ng-model="listController.search" placeholder="Search..." class="form-control"/>-->
+                    <!--<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>-->
+                <!--</div>-->
+            <!--</form>-->
 
-                    <tr ng-repeat="task in baseController.sharedData.tasksList | filter:listController.search track by $index" ng-show="baseController.sharedData.showDoneTasks || !task.done">
-                        <td class="text-center"><input ng-checked="task.done" ng-click="listController.toggleDone($index, task)" class="input" type="checkbox"/></td>
-                        <td><label ng-bind="task.title" ng-class="{'doneTask':task.done}"/></td>
-                        <td><lable ng-bind="task.description" ng-class="{'doneTask':task.done}"/></td>
-                        <td>
-                            <div class="btn-group btn-group-sm">
-                                <button class="btn btn-danger" ng-click="listController.removeTask($index)">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                                <button class="btn btn-primary" ng-click="listController.editTask($index, task)" ng-disabled="task.done">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div><!-- /task table -->
+            <!--<table class="table table-striped table-bordered">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Done</th>-->
+                    <!--<th>Title</th>-->
+                    <!--<th>Description</th>-->
+                    <!--<th>Actions</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
 
-        <!-- task form -->
-        <div class="col-lg-2">
+                    <!--<tr ng-repeat="task in baseController.sharedData.tasksList | filter:listController.search" ng-show="baseController.sharedData.showDoneTasks || !task.done">-->
+                        <!--<td class="text-center"><input ng-checked="task.done" ng-click="listController.toggleDone($index, task)" class="input" type="checkbox"/></td>-->
+                        <!--<td><label ng-bind="task.title" ng-class="{'doneTask':task.done}"/></td>-->
+                        <!--<td><lable ng-bind="task.description" ng-class="{'doneTask':task.done}"/></td>-->
+                        <!--<td>-->
+                            <!--<div class="btn-group btn-group-sm">-->
+                                <!--<button class="btn btn-danger" ng-click="listController.removeTask($index)">-->
+                                    <!--<span class="glyphicon glyphicon-remove"></span>-->
+                                <!--</button>-->
+                                <!--<button class="btn btn-primary" ng-click="listController.editTask($index, task)" ng-disabled="task.done">-->
+                                    <!--<span class="glyphicon glyphicon-edit"></span>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+        <!--</div>&lt;!&ndash; /task table &ndash;&gt;-->
 
-            <form class="form-horizontal" ng-controller="TaskFormController as formController">
+        <!--&lt;!&ndash; task form &ndash;&gt;-->
+        <!--<div class="col-lg-2">-->
 
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Title" ng-model="baseController.sharedData.activeTask.title">
-                </div>
+            <!--<form name="taskForm" class="form-horizontal" ng-controller="TaskFormController as formController" novalidate>-->
 
-                <div class="form-group">
-                    <textarea rows="6" class="form-control" placeholder="Description" ng-model="baseController.sharedData.activeTask.description"></textarea>
-                </div>
+                <!--<div class="form-group">-->
+                    <!--<select class="form-control"-->
+                            <!--name="taskPriority"-->
+                            <!--ng-model="baseController.sharedData.activeTask.priority"-->
+                            <!--ng-options="value for value in formController.taskPriorities"-->
+                            <!--required>-->
+                        <!--<option value="" class="text-muted">Priority</option>-->
+                    <!--</select>-->
 
-                <div class="form-group">
-                    <button class="form-control btn btn-primary" ng-click="formController.toggelBtn()">{{formController.getBtnName()}}</button>
-                </div>
-            </form>
-        </div><!-- /task form -->
+                    <!--<div ng-if="taskForm.taskPriority.$error.required">-->
+                        <!--<span class="text-danger">Priority is required.</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                    <!--<input type="text" class="form-control" placeholder="Title" ng-model="baseController.sharedData.activeTask.title" required>-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                    <!--<textarea rows="6" class="form-control" placeholder="Description" ng-model="baseController.sharedData.activeTask.description" required=""></textarea>-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                    <!--<button class="form-control btn btn-primary" ng-disabled="taskForm.$invalid" ng-click="formController.toggelBtn()">{{formController.getBtnName()}}</button>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>&lt;!&ndash; /task form &ndash;&gt;-->
 
     </div>
 </div><!-- /container-->

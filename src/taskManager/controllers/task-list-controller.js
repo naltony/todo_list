@@ -11,6 +11,7 @@
 
         this.editTask = function($index, task) {
             $scope.baseController.sharedData.activeTaskIndex = $index;
+            $scope.baseController.sharedData.activeTask.priority = task.priority;
             $scope.baseController.sharedData.activeTask.done = task.done;
             $scope.baseController.sharedData.activeTask.title = task.title;
             $scope.baseController.sharedData.activeTask.description = task.description;

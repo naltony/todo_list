@@ -1,15 +1,17 @@
 (function() {
 
-    function TaskBaseController(TaskManageService, $scope) {
+    function TaskBaseController(TaskManageService, LogManagerService, $scope) {
 
         var TaskPrototype = {
             done : false,
             title : "",
-            description : ""
+            description : "",
+            priority : ""
         }
 
         this.getNewTask = function() {
             var task = {};
+            task.priority = '';
             task.done = TaskPrototype.done;
             task.title = TaskPrototype.title;
             task.description = TaskPrototype.description;
@@ -26,6 +28,7 @@
 
         this.convertTask = function (task){
             var newTask = this.getNewTask();
+            newTask.priority = task.priority;
             newTask.done = task.done;
             newTask.title = task.title;
             newTask.description = task.description;
@@ -46,5 +49,5 @@
         }.bind(this));
     }
 
-    angular.module('taskMngApp').controller('TaskBaseController', ['TaskManageService', '$scope', TaskBaseController])
+    angular.module('taskMngApp').controller('TaskBaseController', ['TaskManageService', 'LogManagerService', '$scope', TaskBaseController])
 }());
